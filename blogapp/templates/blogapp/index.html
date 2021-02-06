@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+    {% if data %}
+    <table class="table" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th class="table__header">title</th>
+          <th class="table__header">author</th>
+          <th class="table__header">creation date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for values in data %}
+        <tr>
+          <td class="table__item">{{ values.title }}</td>
+          <td class="table__item">{{ values.author }}</td>
+          <td class="table__item">{{ values.date_creation }}</td>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </body>
+</html>

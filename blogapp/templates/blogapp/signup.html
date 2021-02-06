@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form method="post" id="loginForm">
+        <div class="box">
+          <h2 class="heading-2">Sign up</h2>
+          {% csrf_token %}
+          {% render_field form.email id="email" class="box__input" placeholder="E-maill" %}
+          {% render_field form.first_name class="box__input" placeholder="Full Name" %}
+          {% render_field form.password1 id="password1" class="box__input" placeholder="Password" %}
+          {% render_field form.password2 class="box__input" placeholder="Confirm password" %}
+          <button type="submit" class="btn">Access</button>
+        </div>
+      </form>
+  </body>
+</html>

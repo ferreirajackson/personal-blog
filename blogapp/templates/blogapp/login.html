@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% csrf_token %}
+    <div class="container">
+      <form class="user"  method="post" id="loginForm">
+          <h2 class="heading-2">Sign in</h2>
+          {% csrf_token %}
+          {{ form.as_p }}
+
+          <button type="submit"  class="btn">Access</button>
+          <p><button type="button" onclick="location.href='{% url 'blogapp:signup' %}'" name="button">Novo Usuário</button></p>
+      </form>
+    </div>
+  </body>
+</html>

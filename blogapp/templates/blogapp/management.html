@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h2>This is management page!</h2>
+    <a href="{% url 'blog:logout' %}">Logout</a>
+    <input type="button" class="btn-2" value="Create post" onclick="location.href='{% url 'blogapp:create_post' %}';">
+<p></p>
+  <!-- {% for values in data %}
+  <button type="button" name="button">{{ values.name }}</button>
+  <input type="checkbox" id="vehicle1" name="vehicle1" >{{ values.name }}
+  {% endfor %} -->
+
+
+
+
+  <div class="col-lg-3 mx-auto">
+    <div class="list-group">
+      <a href="/management/" class="list-group-item list-group-item-action">All Products</a>
+      {% for category in categories %}
+      <a href="/management/?category={{category.id}}"
+        >{{category.name}}</a>
+      {% endfor %}
+    </div>
+  </div>
+
+
+
+  <p></p>
+  <table class="table" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+      <tr>
+        <th class="table__header">title</th>
+        <th class="table__header">author</th>
+        <th class="table__header">creation date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td class="table__item"><a href="{% url 'blogapp:edit_post' post.pk %}">{{ post.title }}</a></td>
+        <td class="table__item">{{ post.author }}</td>
+        <td class="table__item">{{ post.date_creation }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </body>
+</html>

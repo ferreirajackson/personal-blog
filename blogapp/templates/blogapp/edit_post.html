@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div class="container">
+        <h1>CREATE POST</h1>
+
+        <form class="user"  method="post" id="loginForm">
+            {% csrf_token %}
+            <p>{{form.title.label}}: {% render_field form.title %}</p>
+            <p>{{form.author.label}}: {% render_field form.author %}</p>
+            <p>{{form.category.label}}: {% render_field form.category %}</p>
+            <p>{{form.body.label}}: {% render_field form.body %}</p>
+            <button type="submit">Edit Post</button>
+        </form>
+    </div>
+  </body>
+</html>
