@@ -63,6 +63,7 @@ class Post(models.Model):
     'Category',
     on_delete=models.SET_NULL,
     null=True)
+    categories = models.CharField(max_length=300,null=True)
 
 
     def __str__(self):
@@ -79,6 +80,14 @@ class Post(models.Model):
             return Post.objects.filter(category = category_name)
         else:
             return Post.get_all_posts();
+
+
+class Temp(models.Model):
+    categories = models.CharField(max_length=300,null=True)
+
+
+    def __str__(self):
+        return self.categories
 
 
 class Category(models.Model):
@@ -101,3 +110,12 @@ class Setup(models.Model):
 
     def __str__(self):
         return str(self.NumberPostsHome)
+
+# class Newsletter(models.Model):
+#     name
+#     email = models.CharField(max_length=4,null=True)
+#     NumberPostsHome = models.IntegerField(null=True)
+#
+#
+#     def __str__(self):
+#         return str(self.NumberPostsHome)
