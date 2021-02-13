@@ -53,6 +53,13 @@ class User(AbstractUser):
     objects = UserManager()
 
 
+class Newsletter(models.Model):
+    email = models.CharField(max_length=255,null=True)
+    status = models.CharField(max_length=10,null=True)
+
+    def __str__(self):
+        return str(self.email)
+
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=255,null=True)
@@ -87,7 +94,7 @@ class Temp(models.Model):
 
 
     def __str__(self):
-        return self.categories
+        return str(self.categories)
 
 
 class Category(models.Model):

@@ -27,5 +27,9 @@
       </tbody>
     </table>
     {% endif %}
+    <!-- <form method="GET" id="loginForm"> -->
+      <input type="newsletter" id="newsletter" name="newsletter" placeholder="email">
+      <button type="submit" onclick="location.href='{% url 'blog:newsletter' %}'">Assinar Newsletter</button>
+    <!-- </form> -->
   </body>
 </html>

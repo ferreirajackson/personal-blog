@@ -53,11 +53,52 @@ def Management(request):
 
 #####################################################################################################################################
 
+def Newsletter(request):
+    cat = request.GET.get('newsletter')
+    print('here')
+    print(cat)
+    if cat:
+        print(cat)
+        p = Newsletter(email=cat, status='ACTIVE')
+        p.save(force_insert=True)
+    return HttpResponseRedirect(reverse_lazy('blog:index'))
+
+#####################################################################################################################################
+
 # class CreatePost(LoginRequiredMixin, CreateView):
 #     model = Post
 #     form_class = CreatePostForm
 #     template_name = "blogapp/create_post.html"
 #     success_url = reverse_lazy( "blog:management" )
+
+#####################################################################################################################################
+
+def Redirects(request, pk):
+    print('building it')
+    # posts = get_object_or_404(Post, pk=pk)
+    # form = EditPostForm(request.POST or None, instance = posts)
+    # # Deleting everything in the table
+    # all = Temp.objects.all().first()
+    # if all:
+    #     all.delete()
+    # # filling temp table
+    # first = Post.objects.get(pk=pk)
+    # p = Temp(categories=first.categories)
+    # p.save(force_insert=True)
+    # categor = ''
+    # print('ve se chega aqui pelo menos')
+    # first = Temp.objects.all().first()
+    # print(pk)
+    # print(first)
+    # if first.categories:
+    #     categor = first.categories.split(',')
+    #     print(categor, 'chunks')
+    # if form.is_valid():
+    #     form.save()
+    #     return HttpResponseRedirect(reverse_lazy('blog:management'))
+    # # context = {'form': form}
+    # # return render(request, 'blogapp/edit_post.html', context)
+    return render(request, 'blogapp/edit_post.html', {'form': form, 'data':categor})
 
 #####################################################################################################################################
 
@@ -142,11 +183,28 @@ def CreatePost(request):
 def EditPost(request, pk):
     posts = get_object_or_404(Post, pk=pk)
     form = EditPostForm(request.POST or None, instance = posts)
+    # Deleting everything in the table
+    all = Temp.objects.all().first()
+    if all:
+        all.delete()
+    # filling temp table
+    first = Post.objects.get(pk=pk)
+    p = Temp(categories=first.categories)
+    p.save(force_insert=True)
+    categor = ''
+    print('ve se chega aqui pelo menos')
+    first = Temp.objects.all().first()
+    print(pk)
+    print(first)
+    if first.categories:
+        categor = first.categories.split(',')
+        print(categor, 'chunks')
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse_lazy('blog:management'))
-    context = {'form': form}
-    return render(request, 'blogapp/edit_post.html', context)
+    # context = {'form': form}
+    # return render(request, 'blogapp/edit_post.html', context)
+    return render(request, 'blogapp/edit_post.html', {'form': form, 'data':categor})
 
 #####################################################################################################################################
 

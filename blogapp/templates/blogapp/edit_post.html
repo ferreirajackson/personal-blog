@@ -3,27 +3,37 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>EDIT POST</title>
   </head>
   <body>
     <script>
+    $(document).ready(function(){
+      $("button").click(function(){
+        // location.href ="{% url 'blog:redirects' %}"
+        $("#myDIV").toggle();
+      });
+    });
         var perfEntries = performance.getEntriesByType("navigation");
         if (perfEntries[0].type === "back_forward") {
-          // location.reload(true);
-          location.href ="{% url 'blog:management' %}"
+          location.href ="{% url 'blog:delete_all_categories' %}"
         }
       </script>
-    <div class="container">
-      <h1>CREATE POST</h1>
-      <form method="GET" id="loginForm">
-        #<input  id='add' name='add' type="CATEGORY" placeholder="CATEGORY">
-        <input type="submit" class="btn-2" value="add cat" >
-      </form>
-      <div class="col-lg-3 mx-auto">
-        <div class="list-group">
-          {% for category in data %}
-          <p>{{category.name}}<a href="{% url 'blogapp:delete_category' category.pk %}">delete</a></p>
-          {% endfor %}
+      <button>Toggle between hiding and showing the paragraphs</button>
+
+      <div id="myDIV">
+        <form method="GET" id="loginForm">
+          #<input  id='add' name='add' type="CATEGORY" placeholder="CATEGORY">
+          <input type="submit" class="btn-2" value="add cat" >
+        </form>
+        <div class="col-lg-3 mx-auto">
+          <div class="list-group">
+            {% if data %}
+              {% for category in data %}
+              <p>{{category}}<a href="#">delete</a></p>
+              {% endfor %}
+            {% endif %}
+          </div>
         </div>
       </div>
         <h1>edit POST</h1>
@@ -35,6 +45,5 @@
             <p>{{form.body.label}}: {% render_field form.body %}</p>
             <button type="submit">Edit Post</button>
         </form>
-    </div>
   </body>
 </html>

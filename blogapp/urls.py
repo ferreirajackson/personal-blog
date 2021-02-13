@@ -13,8 +13,10 @@ urlpatterns = [
     url(r"edit/(?P<pk>\d+)", views.EditPost, name="edit_post"),
     url(r"delete/(?P<pk>\d+)", views.DeletePost, name="delete_post"),
     url(r"management/", views.Management, name="management"),
-    # url(r"addcategory/", views.AddCategory, name="add_category"), 
+    # url(r"addcategory/", views.AddCategory, name="add_category"),
     url(r"deleteCategory/(?P<value>.*)/$", views.DeleteCategory, name="delete_category"),
     url(r"delete_all/", views.DeleteAllCategories, name="delete_all_categories"),
+    url(r"redirects/", views.Redirects, name="redirects"),
+    url(r"newsletter/", views.Newsletter, name="newsletter"),
 
 ]

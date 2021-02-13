@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blogapp.models import Post, Setup, Category, Temp
+from blogapp.models import Post, Setup, Category, Temp, Newsletter
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .models import User
@@ -31,3 +31,4 @@ admin.site.register(Post)
 admin.site.register(Setup)
 admin.site.register(Category)
 admin.site.register(Temp)
+admin.site.register(Newsletter)
