@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="myDIV">
+      <form method="GET">
+        #<input  id='change' name='change' type="CATEGORY" placeholder="CATEGORY">
+        <input type="submit" class="btn-2" value="change cat" >
+      </form>
+      <div class="col-lg-3 mx-auto">
+        <div class="list-group">
+          {% if data %}
+            {% for category in data %}
+              <p>{{category}}<a href="{% url 'blogapp:delete_category_edit' value=category %}">delete</a></p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+      <input type="button" name="submit" value="Go back" onclick="location.href='{% url 'blogapp:management' %}';">
+    </div>
+  </body>
+</html>

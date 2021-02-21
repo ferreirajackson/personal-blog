@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from ckeditor.fields import RichTextField
 
 # UserManager table
 class UserManager(BaseUserManager):
@@ -64,13 +65,15 @@ class Newsletter(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255,null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = models.TextField()
+        # body = models.TextField()
+    body = RichTextField(blank=True, null=True)
     date_creation = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(
     'Category',
     on_delete=models.SET_NULL,
     null=True)
     categories = models.CharField(max_length=300,null=True)
+    post_picture = models.ImageField(upload_to ='images/', null=True, blank=True)
 
 
     def __str__(self):

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Post, Setup, Category, Temp, Newsletter
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView
 from blogapp.forms import CreatePostForm, UserCreateForm, EditPostForm, NewsletterForm
@@ -118,10 +118,48 @@ def Redirects(request, pk):
 #####################################################################################################################################
 
 def DeleteAllCategories(request):
-    print('got hereeeeeeefdvfd')
+    print('got hereeeeeee delete all')
     temp_categories = Temp.objects.all().first()
     temp_categories.delete()
     return HttpResponseRedirect(reverse_lazy('blog:management'))
+
+#####################################################################################################################################
+
+def ChangeTag(request, pk):
+    request.session['pk'] = pk
+    cat = False
+    if request.method=='GET':
+        cat = request.GET.get('change')
+    if cat:
+        find = Post.objects.get(pk=pk)
+        print(find, 'THIS IS THE ONE')
+        if find:
+            if find.categories == '':
+                new = cat
+                find.categories = new
+                find.save()
+                print(cat, 'cat')
+                print(new, 'new')
+                print('none')
+            else:
+                new = cat + ',' + str(find.categories)
+                print(new, 'inseriu')
+                find.categories = new
+                find.save()
+                print('first')
+        else:
+            find = Post(categories=cat)
+            find.save(force_insert=True)
+            print('second')
+    # second session
+    posts = get_object_or_404(Post, pk=pk)
+    if posts.categories:
+        chunks = posts.categories.split(',')
+        print(chunks, 'chunks')
+        categor = chunks
+    else:
+        categor= ''
+    return render(request, 'blogapp/change_tag.html', {'data':categor})
 
 #####################################################################################################################################
 
@@ -177,32 +215,9 @@ def CreatePost(request):
         form = CreatePostForm()
     # context = {'data': data}
     return render(request, 'blogapp/create_post.html', {'form': form, 'data':categor})
+
 #####################################################################################################################################
 
-#
-# def CreatePost(request):
-#     # if request.method=='GET':
-#     print("return this")
-#     cat = request.GET.get('add')
-#     if cat:
-#         print(cat, 'addd')
-#         p = Category(name=cat,description=cat)
-#         p.save(force_insert=True)
-#     categor = Category.get_all_categories()
-#     print(categor)
-#     # data = categor
-#     print(list(categor))
-#     if request.method=='POST':
-#         print('got here')
-#         form = CreatePostForm(data=request.POST)
-#         if form.is_valid():
-#             post = form.save()
-#             post.save()
-#             return HttpResponseRedirect(reverse_lazy('blog:management'))
-#     else:
-#         form = CreatePostForm()
-#     # context = {'data': data}
-#     return render(request, 'blogapp/create_post.html', {'form': form, 'data':categor})
 def EditPost(request, pk):
     posts = get_object_or_404(Post, pk=pk)
     form = EditPostForm(request.POST or None, instance = posts)
@@ -243,6 +258,7 @@ def DeletePost(request, pk):
 
 
 def DeleteCategory(request, value):
+    print('test here')
     first = Temp.objects.all().first()
     string_set = first.categories.split(',')
     new_set = []
@@ -266,6 +282,35 @@ def DeleteCategory(request, value):
     if blank.categories == '':
         blank.delete()
     return HttpResponseRedirect(reverse_lazy('blog:create_post'))
+
+#####################################################################################################################################
+
+def DeleteCategoryEdit(request, value):
+    print('check ifs gotten here')
+    print('and did something')
+    pk_number = int(request.session['pk'])
+    posts = Post.objects.get(pk=pk_number)
+    string_set = posts.categories.split(',')
+    new_set = []
+    for a_string in string_set:
+        if value != a_string:
+            new_set.append(a_string)
+    print(new_set, 'new set')
+    novo = ''
+    print(new_set)
+    for n in new_set:
+        if new_set.index(n) == len(new_set)-1:
+            novo = novo + n
+        else:
+            novo = n + ',' + novo
+        print(novo, 'lets seeee the result')
+    # updating post
+    posts.categories = novo
+    posts.save()
+    response = HttpResponseRedirect(reverse_lazy('blogapp:change_tag', kwargs={'pk': pk_number}))
+    return response
+
+
 
 #####################################################################################################################################
 

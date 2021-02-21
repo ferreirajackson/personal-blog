@@ -44,6 +44,8 @@
         <td>{{ post.author }}</td>
         <td>{{ post.date_creation }}</td>
         <td><a href="{% url 'blogapp:delete_post' post.pk %}">DELETE POST</a></td>
+        <td><a href="{% url 'blogapp:change_tag' post.pk %}">CHANGE TAG</a></td>
+
       </tr>
       {% endfor %}
     </tbody>

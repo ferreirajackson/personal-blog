@@ -19,7 +19,7 @@ class UserCreateForm(UserCreationForm):
 class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'author', 'category', 'body')
+        fields = ('title', 'author', 'category', 'body', 'post_picture')
 
 
 class EditPostForm(forms.ModelForm):

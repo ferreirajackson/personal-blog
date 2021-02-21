@@ -7,43 +7,14 @@
     <title>EDIT POST</title>
   </head>
   <body>
-    <script>
-    $(document).ready(function(){
-      $("button").click(function(){
-        // location.href ="{% url 'blog:redirects' %}"
-        $("#myDIV").toggle();
-      });
-    });
-        var perfEntries = performance.getEntriesByType("navigation");
-        if (perfEntries[0].type === "back_forward") {
-          location.href ="{% url 'blog:delete_all_categories' %}"
-        }
-      </script>
-      <button>Toggle between hiding and showing the paragraphs</button>
-
-      <div id="myDIV">
-        <form method="GET" id="loginForm">
-          #<input  id='add' name='add' type="CATEGORY" placeholder="CATEGORY">
-          <input type="submit" class="btn-2" value="add cat" >
-        </form>
-        <div class="col-lg-3 mx-auto">
-          <div class="list-group">
-            {% if data %}
-              {% for category in data %}
-              <p>{{category}}<a href="#">delete</a></p>
-              {% endfor %}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-        <h1>edit POST</h1>
-        <form class="user"  method="post" id="loginForm">
-            {% csrf_token %}
-            <p>{{form.title.label}}: {% render_field form.title %}</p>
-            <p>{{form.author.label}}: {% render_field form.author %}</p>
-            <p>{{form.category.label}}: {% render_field form.category %}</p>
-            <p>{{form.body.label}}: {% render_field form.body %}</p>
-            <button type="submit">Edit Post</button>
-        </form>
+    <h1>edit POST</h1>
+    <form class="user"  method="post" id="loginForm">
+        {% csrf_token %}
+        <p>{{form.title.label}}: {% render_field form.title %}</p>
+        <p>{{form.author.label}}: {% render_field form.author %}</p>
+        <p>{{form.category.label}}: {% render_field form.category %}</p>
+        <p>{{form.body.label}}: {% render_field form.body %}</p>
+        <button type="submit">Edit Post</button>
+    </form>
   </body>
 </html>

@@ -14,7 +14,7 @@
         }
       </script>
         <h1>CREATE POST</h1>
-        <form method="GET" id="loginForm">
+        <form method="GET" enctype="multipart/form-data">
           #<input  id='add' name='add' type="CATEGORY" placeholder="CATEGORY">
           <input type="submit" class="btn-2" value="add cat" >
         </form>
@@ -22,18 +22,14 @@
           <div class="list-group">
             {% if data %}
               {% for category in data %}
-              <p>{{category}}<a href="{% url 'blogapp:delete_category' value=category %}">delete</a></p>
+                <p>{{category}}<a href="{% url 'blogapp:delete_category' value=category %}">delete</a></p>
               {% endfor %}
             {% endif %}
           </div>
         </div>
-        <form method="POST" id="loginForm">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <p>{{form.title.label}}: {% render_field form.title %}</p>
-            <p>{{form.author.label}}: {% render_field form.author %}</p>
-
-            <p>{{form.category.label}}: {% render_field form.category %}</p>
-            <p>{{form.body.label}}: {% render_field form.body %}</p>
+            {{ form.as_p }}
             <button type="submit">Create Post</button>
         </form>
     </div>
