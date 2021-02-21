@@ -1,15 +1,25 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Post, Setup, Category, Temp
+from .models import Post, Setup, Category, Temp, Newsletter
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView
-from blogapp.forms import CreatePostForm, UserCreateForm, EditPostForm
+from blogapp.forms import CreatePostForm, UserCreateForm, EditPostForm, NewsletterForm
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.mail import send_mail
 
 # Create your views here.
 def index(request):
+    if request.method=='POST':
+        form = NewsletterForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.save()
+            return HttpResponseRedirect(reverse_lazy('blog:index'))
+    else:
+        form = NewsletterForm()
+    # context = {'form': form}
     dict = {'data' : None}
     try:
         limit = Setup.objects.get(SetupKey='blog')
@@ -17,7 +27,7 @@ def index(request):
         dict = {'data' : Posts}
     except:
         print("No result for thhis query")
-    return render(request, 'blogapp/index.html', dict)
+    return render(request, 'blogapp/index.html', {'form': form, 'data' : Posts})
 
 #####################################################################################################################################
 
@@ -53,15 +63,20 @@ def Management(request):
 
 #####################################################################################################################################
 
-def Newsletter(request):
-    cat = request.GET.get('newsletter')
-    print('here')
-    print(cat)
-    if cat:
-        print(cat)
-        p = Newsletter(email=cat, status='ACTIVE')
-        p.save(force_insert=True)
-    return HttpResponseRedirect(reverse_lazy('blog:index'))
+# def Newsletter(request):
+#     print('got hereeeee')
+#     if 'q' in request.GET:
+#         print('INSIDE')
+#     # print(request)
+#     # print(request.GET())
+#     cat = request.GET.get('q')
+#     print('here')
+#     print(cat)
+#     # if cat:
+#     #     print(cat)
+#     #     p = Newsletter(email=cat, status='ACTIVE')
+#     #     p.save(force_insert=True)
+#     return HttpResponseRedirect(reverse_lazy('blog:index'))
 
 #####################################################################################################################################
 
@@ -148,7 +163,15 @@ def CreatePost(request):
                 post.categories = temp_categories.categories
                 temp_categories.delete()
             post.save()
-
+            # Send email
+            all_users = Newsletter.objects.filter(status='ok')
+            print(all_users)
+            if all_users.exists():
+                for user in all_users:
+                    print(user, 'each of')
+                    email_user = str(user.email)
+                    message = 'NOVO POST GALERA'
+                    send_mail('Teste', message, 'ccfitgym@gmail.com', [email_user], fail_silently=False)
             return HttpResponseRedirect(reverse_lazy('blog:management'))
     else:
         form = CreatePostForm()

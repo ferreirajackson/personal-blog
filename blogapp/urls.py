@@ -17,6 +17,6 @@ urlpatterns = [
     url(r"deleteCategory/(?P<value>.*)/$", views.DeleteCategory, name="delete_category"),
     url(r"delete_all/", views.DeleteAllCategories, name="delete_all_categories"),
     url(r"redirects/", views.Redirects, name="redirects"),
-    url(r"newsletter/", views.Newsletter, name="newsletter"),
+    # url(r"newsletter/", views.Newsletter, name="newsletter"),
 
 ]

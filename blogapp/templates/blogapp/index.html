@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load widget_tweaks %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -27,9 +28,11 @@
       </tbody>
     </table>
     {% endif %}
-    <!-- <form method="GET" id="loginForm"> -->
-      <input type="newsletter" id="newsletter" name="newsletter" placeholder="email">
-      <button type="submit" onclick="location.href='{% url 'blog:newsletter' %}'">Assinar Newsletter</button>
-    <!-- </form> -->
+
+    <form method="post" >
+          {% csrf_token %}
+          {% render_field form.email id="email" class="box__input" placeholder="E-maill" %}
+          <button type="submit" class="btn">Access</button>
+    </form>
   </body>
 </html>

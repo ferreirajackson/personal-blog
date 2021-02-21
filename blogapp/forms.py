@@ -1,5 +1,5 @@
 from django import forms
-from blogapp.models import Post
+from blogapp.models import Post, Newsletter
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
@@ -26,3 +26,9 @@ class EditPostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'author', 'category', 'body')
+
+
+class NewsletterForm(forms.ModelForm):
+    class Meta:
+        model = Newsletter
+        fields = ('email',)
